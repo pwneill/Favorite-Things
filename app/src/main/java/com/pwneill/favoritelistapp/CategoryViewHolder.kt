@@ -3,13 +3,12 @@ package com.pwneill.favoritelistapp
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 
 class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val textView: TextView
 
-    init {
-        // Define click listener for the ViewHolder's View.
-        textView = view.findViewById(R.id.category_listView)
-    }
+    val txtCategoryNumber: TextView = view.findViewById(R.id.category_number_textView)
+    val txtCategoryName: TextView = view.findViewById(R.id.category_name_textView)
+
 }
