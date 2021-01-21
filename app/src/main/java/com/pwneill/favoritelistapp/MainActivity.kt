@@ -1,13 +1,13 @@
 package com.pwneill.favoritelistapp
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog.*
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +21,11 @@ class MainActivity : AppCompatActivity() {
         categoryRecyclerView.adapter = CategoryAdapter()
         categoryRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
 
+        val fab: FloatingActionButton = findViewById((R.id.fab))
+        fab.setOnClickListener() {
+            Toast.makeText(this@MainActivity, "Ghostride the Whip", Toast.LENGTH_SHORT).show()
+            displayCreateCategoryDialog()
+        }
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -38,5 +43,23 @@ class MainActivity : AppCompatActivity() {
 //            else -> super.onOptionsItemSelected(item)
 //        }
 //    }
+
+    private fun displayCreateCategoryDialog() {
+
+        val alertTitle = getString(R.string.alertTitle)
+        val positiveBtnTitle = getString(R.string.btnTitle)
+
+        val alertDialogBuilder = Builder(this@MainActivity)
+        alertDialogBuilder.setTitle(alertTitle)
+
+            val categoryEditText = EditText(this@MainActivity)
+            alertDialogBuilder.setView(categoryEditText)
+            alertDialogBuilder.setPositiveButton(positiveBtnTitle) { dialogInterface , _ ->
+
+                dialogInterface.dismiss()
+            }
+
+        alertDialogBuilder.show()
+        }
 
 }
