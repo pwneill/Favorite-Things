@@ -12,14 +12,14 @@ class CategoryManager(private val context: Context) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = sharedPreferences.edit()
 
-        val itemsHashSet = HashSet(category.items)
+        val itemHashSet = hashSetOf(category.items)
 
-        editor.putStringSet(category.name, itemsHashSet)
+        editor.putStringSet(category.name, setOf(itemHashSet.toString()))
 
         editor.apply()
     }
 
-    fun retrieveCategories (): ArrayList<CategoryModel> {
+    fun retrieveCategories(): ArrayList<CategoryModel> {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val data = sharedPreferences.all
