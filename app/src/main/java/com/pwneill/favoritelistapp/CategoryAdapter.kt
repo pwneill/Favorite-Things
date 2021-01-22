@@ -6,12 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 
-class CategoryAdapter() :
+class CategoryAdapter(cat: ArrayList<CategoryModel>) :
     RecyclerView.Adapter<CategoryViewHolder>() {
 
-
-    private val categories = arrayOf("Hobbies", "Sports", "Games", "Food", "Artists", "Beer")
-
+    private val categories = ArrayList<CategoryModel>(cat)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
 
@@ -24,9 +22,15 @@ class CategoryAdapter() :
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
 
-        val newPos = position + 1
+        val newPos: Int  = if (position > 1) {
+            position + 1
+
+        } else {
+            position
+        }
+
         holder.txtCategoryNumber.text = newPos.toString()
-        holder.txtCategoryName.text = categories[position]
+        holder.txtCategoryName.text = categories.get(newPos).name
 
     }
 
@@ -34,5 +38,11 @@ class CategoryAdapter() :
         return categories.size
     }
 
+    fun addCategory(cat: CategoryModel) {
+
+        categories.add(cat)
+        notifyItemInserted(categories.size -1)
+
     }
+   }
 

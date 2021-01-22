@@ -1,6 +1,5 @@
 package com.pwneill.favoritelistapp
 
-import android.R.attr
 import android.content.Context
 import androidx.preference.PreferenceManager
 
@@ -37,4 +36,5 @@ class CategoryManager(private val context: Context) {
         return categories
 
     }
+
 }

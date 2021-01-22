@@ -11,38 +11,26 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
+   private val categoryManager = CategoryManager(this)
+     private lateinit var categoryRecyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
 
-        val categoryRecyclerView: RecyclerView = findViewById(R.id.category_listView)
-        categoryRecyclerView.adapter = CategoryAdapter()
+        val categories: ArrayList<CategoryModel> = categoryManager.retrieveCategories()
+         categoryRecyclerView = findViewById(R.id.category_listView)
+        categoryRecyclerView.adapter = CategoryAdapter(categories)
         categoryRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
 
         val fab: FloatingActionButton = findViewById((R.id.fab))
-        fab.setOnClickListener() {
+        fab.setOnClickListener {
             Toast.makeText(this@MainActivity, "Ghostride the Whip", Toast.LENGTH_SHORT).show()
             displayCreateCategoryDialog()
         }
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.menu_main, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        return when (item.itemId) {
-//            R.id.action_settings -> true
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
 
     private fun displayCreateCategoryDialog() {
 
@@ -55,6 +43,12 @@ class MainActivity : AppCompatActivity() {
             val categoryEditText = EditText(this@MainActivity)
             alertDialogBuilder.setView(categoryEditText)
             alertDialogBuilder.setPositiveButton(positiveBtnTitle) { dialogInterface , _ ->
+
+                val category = CategoryModel(categoryEditText.text.toString(), ArrayList<String>())
+                categoryManager.saveCategory((category))
+
+                val categoryRecyclerAdapter: CategoryAdapter = categoryRecyclerView.adapter as CategoryAdapter
+                categoryRecyclerAdapter.addCategory(category)
 
                 dialogInterface.dismiss()
             }
