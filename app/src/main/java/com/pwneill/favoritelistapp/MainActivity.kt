@@ -1,5 +1,6 @@
 package com.pwneill.favoritelistapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
@@ -12,7 +13,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class MainActivity : AppCompatActivity() {
 
    private val categoryManager = CategoryManager(this)
-     private lateinit var categoryRecyclerView: RecyclerView
+    private lateinit var categoryRecyclerView: RecyclerView
+    val CATEGORY_OBJECT_KEY: String = "CATEGORY_KEY"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +56,11 @@ class MainActivity : AppCompatActivity() {
             }
 
         alertDialogBuilder.show()
-        }
+     }
 
+    private fun displayCategoryItems(cat: CategoryModel) {
+
+        val categoryItemsIntent = Intent(this, CategoryItemsActivity::class.java)
+//        categoryItemsIntent.putExtra(CATEGORY_OBJECT_KEY, cat)
+    }
 }

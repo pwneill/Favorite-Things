@@ -1,8 +1,14 @@
 package com.pwneill.favoritelistapp
 
-class CategoryModel (name: String, items: ArrayList<String>) {
+import kotlinx.serialization.Serializable
 
-     val name = name
-     val items = arrayOf(items)
+@Serializable
+class CategoryModel (val name: String, val items: ArrayList<String>) {
 
 }
+
+//fun main () {
+//
+//    val data = Project(this.name, this.items)
+//
+//}

@@ -22,12 +22,7 @@ class CategoryAdapter(cat: ArrayList<CategoryModel>) :
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
 
-        val newPos: Int  = if (position > 1) {
-            position + 1
-
-        } else {
-            position
-        }
+        val newPos: Int  = position
 
         holder.txtCategoryNumber.text = newPos.toString()
         holder.txtCategoryName.text = categories.get(newPos).name
