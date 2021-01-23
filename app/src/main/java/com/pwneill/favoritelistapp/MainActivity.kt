@@ -10,11 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInterface  {
 
-   private val categoryManager = CategoryManager(this)
+    @Override
+    override fun categoryIsClicked(category: CategoryModel) {
+        super.categoryIsClicked(category)
+        this.displayCategoryItems(category)
+    }
+
+    private val categoryManager = CategoryManager(this)
     private lateinit var categoryRecyclerView: RecyclerView
-    val CATEGORY_OBJECT_KEY: String = "CATEGORY_KEY"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         val categories: ArrayList<CategoryModel> = categoryManager.retrieveCategories()
          categoryRecyclerView = findViewById(R.id.category_listView)
-        categoryRecyclerView.adapter = CategoryAdapter(categories)
+        categoryRecyclerView.adapter = CategoryAdapter(categories, this@MainActivity)
         categoryRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
 
         val fab: FloatingActionButton = findViewById((R.id.fab))
@@ -46,13 +51,14 @@ class MainActivity : AppCompatActivity() {
             alertDialogBuilder.setView(categoryEditText)
             alertDialogBuilder.setPositiveButton(positiveBtnTitle) { dialogInterface , _ ->
 
-                val category = CategoryModel(categoryEditText.text.toString(), ArrayList<String>())
+                val category = CategoryModel(categoryEditText.text.toString(), ArrayList())
                 categoryManager.saveCategory((category))
 
                 val categoryRecyclerAdapter: CategoryAdapter = categoryRecyclerView.adapter as CategoryAdapter
                 categoryRecyclerAdapter.addCategory(category)
 
                 dialogInterface.dismiss()
+                displayCategoryItems(category)
             }
 
         alertDialogBuilder.show()
@@ -61,6 +67,8 @@ class MainActivity : AppCompatActivity() {
     private fun displayCategoryItems(cat: CategoryModel) {
 
         val categoryItemsIntent = Intent(this, CategoryItemsActivity::class.java)
-//        categoryItemsIntent.putExtra(CATEGORY_OBJECT_KEY, cat)
+        categoryItemsIntent.putExtra(cat.name, cat.items)
+
+        startActivity(categoryItemsIntent)
     }
 }

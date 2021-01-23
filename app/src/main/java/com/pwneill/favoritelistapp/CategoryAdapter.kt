@@ -6,10 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 
-class CategoryAdapter(cat: ArrayList<CategoryModel>) :
+class CategoryAdapter(cat: ArrayList<CategoryModel>, private val categoryIsClickedInterface: CategoryIsClickedInterface) :
     RecyclerView.Adapter<CategoryViewHolder>() {
 
     private val categories = ArrayList<CategoryModel>(cat)
+
+    interface CategoryIsClickedInterface {
+
+         fun categoryIsClicked (category: CategoryModel) {
+
+         }
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
 
@@ -26,7 +34,9 @@ class CategoryAdapter(cat: ArrayList<CategoryModel>) :
 
         holder.txtCategoryNumber.text = newPos.toString()
         holder.txtCategoryName.text = categories.get(newPos).name
-
+        holder.itemView.setOnClickListener {
+            categoryIsClickedInterface.categoryIsClicked(categories[newPos])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -39,5 +49,6 @@ class CategoryAdapter(cat: ArrayList<CategoryModel>) :
         notifyItemInserted(categories.size -1)
 
     }
+
    }
 
