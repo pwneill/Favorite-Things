@@ -9,17 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInterface  {
 
-    @Override
-    override fun categoryIsClicked(category: CategoryModel) {
-        super.categoryIsClicked(category)
-        this.displayCategoryItems(category)
-    }
-
     private val categoryManager = CategoryManager(this)
     private lateinit var categoryRecyclerView: RecyclerView
+    val categoryObjKey: String= "CATEGORY_OBJECT_KEY"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,8 +64,15 @@ class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInter
     private fun displayCategoryItems(cat: CategoryModel) {
 
         val categoryItemsIntent = Intent(this, CategoryItemsActivity::class.java)
-        categoryItemsIntent.putExtra(cat.name, cat.items)
+        val data = Json.encodeToString(cat)
+        categoryItemsIntent.putExtra(categoryObjKey, data)
 
         startActivity(categoryItemsIntent)
+    }
+
+    @Override
+    override fun categoryIsClicked(category: CategoryModel) {
+        super.categoryIsClicked(category)
+        this.displayCategoryItems(category)
     }
 }
