@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInter
     private fun displayCategoryItems(cat: CategoryModel) {
 
         val categoryItemsIntent = Intent(this, CategoryItemsActivity::class.java)
-        val data = Json.encodeToString(cat)
+        val data: String = Json.encodeToString(cat)
         categoryItemsIntent.putExtra(categoryObjKey, data)
 
         startActivity(categoryItemsIntent)

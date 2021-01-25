@@ -11,4 +11,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="alertTitle">Enter the Category</string>
     <string name="btnTitle">Create</string>
+    <string name="itemDialogTitle">Please Enter Item Name: </string>
+    <string name="positiveBtnItem">Create Item</string>
 </resources>
