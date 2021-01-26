@@ -1,5 +1,6 @@
 package com.pwneill.favoritelistapp
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,9 @@ class ItemsAdapter (private val category: CategoryModel) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
-        holder.txtView.text = category.items[position]
+        holder.txtView.append(category.items[position])
+        Log.i("cat", category.items[position])
+
 
 
     }

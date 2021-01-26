@@ -1,5 +1,6 @@
 package com.pwneill.favoritelistapp
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
@@ -16,7 +17,8 @@ class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInter
 
     private val categoryManager = CategoryManager(this)
     private lateinit var categoryRecyclerView: RecyclerView
-    val categoryObjKey: String= "CATEGORY_OBJECT_KEY"
+    val categoryObjKey: String = "CATEGORY_OBJECT_KEY"
+    val mainActivityReqCode: Int = 69
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +69,32 @@ class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInter
         val data: String = Json.encodeToString(cat)
         categoryItemsIntent.putExtra(categoryObjKey, data)
 
-        startActivity(categoryItemsIntent)
+        startActivityForResult(categoryItemsIntent,mainActivityReqCode)
+
+    }
+
+    @Override
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == mainActivityReqCode && resultCode == Activity.RESULT_OK) {
+
+            if (data != null) {
+
+                categoryManager.saveCategory(data.getSerializableExtra(categoryObjKey) as CategoryModel)
+                updateCategories()
+
+
+            }
+
+        }
+
+    }
+
+    private fun updateCategories() {
+
+        val categories: ArrayList<CategoryModel> = categoryManager.retrieveCategories()
+        categoryRecyclerView.adapter = CategoryAdapter(categories, this)
     }
 
     @Override

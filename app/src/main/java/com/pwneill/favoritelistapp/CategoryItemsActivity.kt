@@ -1,5 +1,7 @@
 package com.pwneill.favoritelistapp
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType.TYPE_CLASS_TEXT
 import android.widget.EditText
@@ -56,5 +58,19 @@ class CategoryItemsActivity : AppCompatActivity() {
                 }
                 .create()
                 .show()
+    }
+
+    override fun onBackPressed() {
+
+        val bundle = Bundle()
+        bundle.putSerializable(MainActivity().categoryObjKey, category)
+
+        val intent = Intent()
+        intent.putExtras(bundle)
+        setResult(Activity.RESULT_OK, intent)
+
+
+        super.onBackPressed()
+
     }
 }

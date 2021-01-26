@@ -11,9 +11,9 @@ class CategoryManager(private val context: Context) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = sharedPreferences.edit()
 
-        val itemHashSet = hashSetOf(category.items)
+        val itemHashSet = HashSet(category.items)
 
-        editor.putStringSet(category.name, setOf(itemHashSet.toString()))
+        editor.putStringSet(category.name, itemHashSet)
 
         editor.apply()
     }
