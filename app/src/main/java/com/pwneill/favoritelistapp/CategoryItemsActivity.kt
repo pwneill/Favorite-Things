@@ -10,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+
 
 class CategoryItemsActivity : AppCompatActivity() {
 
@@ -23,7 +22,8 @@ class CategoryItemsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_items)
 
-        category = Json.decodeFromString(intent.getSerializableExtra(MainActivity().categoryObjKey) as String)
+        category = intent.getParcelableExtra<CategoryModel>(MainActivity().categoryObjKey)!!
+//        category = BundJson.decodeFromString(intent.getSerializableExtra(MainActivity().categoryObjKey) as String)
         title = category.name
 
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView)
@@ -63,7 +63,7 @@ class CategoryItemsActivity : AppCompatActivity() {
     override fun onBackPressed() {
 
         val bundle = Bundle()
-        bundle.putSerializable(MainActivity().categoryObjKey, category)
+        bundle.putParcelable(MainActivity().categoryObjKey, category)
 
         val intent = Intent()
         intent.putExtras(bundle)

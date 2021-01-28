@@ -1,9 +1,9 @@
 package com.pwneill.favoritelistapp
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class CategoryModel (val name: String, val items: ArrayList<String>) : java.io.Serializable {
+@Parcelize
+data class CategoryModel (val name: String, val items: ArrayList<String>) : Parcelable {
 
 
 

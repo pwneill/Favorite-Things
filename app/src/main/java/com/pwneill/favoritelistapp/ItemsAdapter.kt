@@ -24,7 +24,6 @@ class ItemsAdapter (private val category: CategoryModel) : RecyclerView.Adapter<
         Log.i("cat", category.items[position])
 
 
-
     }
 
     override fun getItemCount(): Int {

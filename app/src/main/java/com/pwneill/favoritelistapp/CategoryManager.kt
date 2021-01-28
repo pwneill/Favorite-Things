@@ -11,7 +11,7 @@ class CategoryManager(private val context: Context) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = sharedPreferences.edit()
 
-        val itemHashSet = HashSet(category.items)
+        val itemHashSet = HashSet(category.items as List<String>)
 
         editor.putStringSet(category.name, itemHashSet)
 
@@ -26,12 +26,10 @@ class CategoryManager(private val context: Context) {
         val categories = ArrayList<CategoryModel>()
 
         for (item in data) {
+            val category = CategoryModel(item.key, ArrayList(item.value as HashSet<String>))
 
-            val category = CategoryModel(item.key, arrayListOf(item.value.toString()))
-
-            categories.add(category)
-
-        }
+                categories.add(category)
+            }
 
         return categories
 

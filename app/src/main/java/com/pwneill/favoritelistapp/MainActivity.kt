@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInterface  {
 
@@ -66,8 +64,7 @@ class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInter
     private fun displayCategoryItems(cat: CategoryModel) {
 
         val categoryItemsIntent = Intent(this, CategoryItemsActivity::class.java)
-        val data: String = Json.encodeToString(cat)
-        categoryItemsIntent.putExtra(categoryObjKey, data)
+        categoryItemsIntent.putExtra(categoryObjKey, cat)
 
         startActivityForResult(categoryItemsIntent,mainActivityReqCode)
 
@@ -81,9 +78,8 @@ class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInter
 
             if (data != null) {
 
-                categoryManager.saveCategory(data.getSerializableExtra(categoryObjKey) as CategoryModel)
+                categoryManager.saveCategory(data.getParcelableExtra<CategoryModel>(categoryObjKey) as CategoryModel)
                 updateCategories()
-
 
             }
 
