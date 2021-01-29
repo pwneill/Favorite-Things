@@ -3,35 +3,30 @@ package com.pwneill.favoritelistapp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInterface  {
+class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryInteractionListener {
 
-    private val categoryManager = CategoryManager(this)
-    private lateinit var categoryRecyclerView: RecyclerView
+    private val categoryFragment: CategoryFragment = CategoryFragment.newInstance()
+
     val categoryObjKey: String = "CATEGORY_OBJECT_KEY"
-    val mainActivityReqCode: Int = 69
+    private val mainActivityReqCode: Int = 69
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-
-        val categories: ArrayList<CategoryModel> = categoryManager.retrieveCategories()
-         categoryRecyclerView = findViewById(R.id.category_listView)
-        categoryRecyclerView.adapter = CategoryAdapter(categories, this@MainActivity)
-        categoryRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+        supportFragmentManager.beginTransaction()
+            .add(R.id.category_fragment_container, categoryFragment)
+            .commit()
 
         val fab: FloatingActionButton = findViewById((R.id.fab))
         fab.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Ghostride the Whip", Toast.LENGTH_SHORT).show()
             displayCreateCategoryDialog()
         }
     }
@@ -49,10 +44,7 @@ class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInter
             alertDialogBuilder.setPositiveButton(positiveBtnTitle) { dialogInterface , _ ->
 
                 val category = CategoryModel(categoryEditText.text.toString(), ArrayList())
-                categoryManager.saveCategory((category))
-
-                val categoryRecyclerAdapter: CategoryAdapter = categoryRecyclerView.adapter as CategoryAdapter
-                categoryRecyclerAdapter.addCategory(category)
+                categoryFragment.addCategoryToManager(category)
 
                 dialogInterface.dismiss()
                 displayCategoryItems(category)
@@ -73,29 +65,17 @@ class MainActivity : AppCompatActivity(), CategoryAdapter.CategoryIsClickedInter
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.i("fragment", data?.getParcelableExtra<CategoryModel>(categoryObjKey).toString())
 
         if (requestCode == mainActivityReqCode && resultCode == Activity.RESULT_OK) {
 
-            if (data != null) {
+            if (data != null) this.categoryFragment.saveCategory(data.getParcelableExtra<CategoryModel>(categoryObjKey) as CategoryModel)
+        }
+    }
 
-                categoryManager.saveCategory(data.getParcelableExtra<CategoryModel>(categoryObjKey) as CategoryModel)
-                updateCategories()
+    override fun categoryIsTapped(cat: CategoryModel) {
 
-            }
+        displayCategoryItems(cat)
 
         }
-
     }
-
-    private fun updateCategories() {
-
-        val categories: ArrayList<CategoryModel> = categoryManager.retrieveCategories()
-        categoryRecyclerView.adapter = CategoryAdapter(categories, this)
-    }
-
-    @Override
-    override fun categoryIsClicked(category: CategoryModel) {
-        super.categoryIsClicked(category)
-        this.displayCategoryItems(category)
-    }
-}

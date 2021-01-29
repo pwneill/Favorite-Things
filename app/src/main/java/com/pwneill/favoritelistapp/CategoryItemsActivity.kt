@@ -22,8 +22,7 @@ class CategoryItemsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_items)
 
-        category = intent.getParcelableExtra<CategoryModel>(MainActivity().categoryObjKey)!!
-//        category = BundJson.decodeFromString(intent.getSerializableExtra(MainActivity().categoryObjKey) as String)
+        category = intent.getParcelableExtra(MainActivity().categoryObjKey)!!
         title = category.name
 
         itemsRecyclerView = findViewById(R.id.itemsRecyclerView)

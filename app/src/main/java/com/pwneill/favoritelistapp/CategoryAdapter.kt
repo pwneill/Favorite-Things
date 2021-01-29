@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 
-class CategoryAdapter(cat: ArrayList<CategoryModel>, private val categoryIsClickedInterface: CategoryIsClickedInterface) :
+class CategoryAdapter(cat: ArrayList<CategoryModel>, private val categoryIsClickedInterface: CategoryIsClickedListener) :
     RecyclerView.Adapter<CategoryViewHolder>() {
 
     private val categories = ArrayList<CategoryModel>(cat)
 
-    interface CategoryIsClickedInterface {
+    interface CategoryIsClickedListener {
 
          fun categoryIsClicked (category: CategoryModel) {
 
