@@ -3,7 +3,6 @@ package com.pwneill.favoritelistapp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog.*
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryInteractionListener {
 
-    private val categoryFragment: CategoryFragment = CategoryFragment.newInstance()
+    private val categoryFragment: CategoryFragment = CategoryFragment()
 
     val categoryObjKey: String = "CATEGORY_OBJECT_KEY"
     private val mainActivityReqCode: Int = 69
@@ -65,11 +64,10 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryInteraction
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.i("fragment", data?.getParcelableExtra<CategoryModel>(categoryObjKey).toString())
 
         if (requestCode == mainActivityReqCode && resultCode == Activity.RESULT_OK) {
 
-            if (data != null) this.categoryFragment.saveCategory(data.getParcelableExtra<CategoryModel>(categoryObjKey) as CategoryModel)
+            if (data != null) categoryFragment.saveCategory(data.getParcelableExtra<CategoryModel>(categoryObjKey) as CategoryModel)
         }
     }
 

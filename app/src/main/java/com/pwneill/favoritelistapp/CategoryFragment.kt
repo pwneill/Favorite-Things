@@ -44,6 +44,7 @@ class CategoryFragment : Fragment(), CategoryAdapter.CategoryIsClickedListener {
         return inflater.inflate(R.layout.fragment_category, container, false)
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -90,13 +91,4 @@ class CategoryFragment : Fragment(), CategoryAdapter.CategoryIsClickedListener {
         categoryRecyclerView.adapter = CategoryAdapter(categories, this)
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance() =
-                CategoryFragment().apply {
-                    arguments = Bundle().apply {
-                    }
-                }
-    }
 }
