@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType.TYPE_CLASS_TEXT
+import android.util.Log
 import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.appcompat.app.AlertDialog.*
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryInteraction
         categoryItemsFragmentContainer = findViewById(R.id.category_items_fragment_container)
 
         isTablet = categoryItemsFragmentContainer != null
+
         fab = findViewById(R.id.fab)
 
         fab.setOnClickListener {
@@ -61,6 +63,8 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryInteraction
 
     private fun displayCategoryItems(cat: CategoryModel) {
 
+        Log.i("tablet", isTablet.toString())
+
         if (!isTablet) {
 
             val categoryItemsIntent = Intent(this, CategoryItemsActivity::class.java)
@@ -69,20 +73,26 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryInteraction
             startActivityForResult(categoryItemsIntent,mainActivityReqCode)
 
         } else {
-            title = cat.name
             if (categoryItemsFragment != null) {
 
-                categoryItemsFragment = CategoryItemsFragment.newInstance(cat)
+                supportFragmentManager.beginTransaction()
+                    .remove(categoryItemsFragment!!).commit()
+                categoryItemsFragment = null
+
+            }
+            title = cat.name
+            categoryItemsFragment = CategoryItemsFragment.newInstance(cat)
+
+            if (CategoryItemsFragment != null) {
+
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.category_items_fragment_container, categoryItemsFragment!!)
                     .addToBackStack(null).commit()
-
-            }
+                }
 
             fab.setOnClickListener {
                 displayCreateCategoryItemDialog()
             }
-
         }
 
     }

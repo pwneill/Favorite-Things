@@ -31,13 +31,17 @@ class CategoryItemsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view: View = inflater.inflate(R.layout.fragment_category_items, container, false)
-        itemsRecyclerView = view.findViewById(R.id.itemsRecyclerView)
-        itemsRecyclerView.adapter = ItemsAdapter(category)
 
-        itemsRecyclerView.layoutManager = LinearLayoutManager(context)
+        if (view != null) {
+            itemsRecyclerView = view.findViewById(R.id.itemsRecyclerView)
+            itemsRecyclerView.adapter = ItemsAdapter(category)
+            itemsRecyclerView.layoutManager = LinearLayoutManager(context)
+        }
+
 
         // Inflate the layout for this fragment
         return view
+
     }
 
     fun addItemToCategory(item: String) {
