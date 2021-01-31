@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemsAdapter (private val category: CategoryModel) : RecyclerView.Adapter<ItemViewHolder>() {
-
+class ItemsAdapter (private var category: CategoryModel) : RecyclerView.Adapter<ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
 
@@ -29,6 +28,12 @@ class ItemsAdapter (private val category: CategoryModel) : RecyclerView.Adapter<
     override fun getItemCount(): Int {
 
         return category.items.size
+
+    }
+
+    fun setCategory(cat: CategoryModel) {
+
+        this.category = cat
 
     }
 

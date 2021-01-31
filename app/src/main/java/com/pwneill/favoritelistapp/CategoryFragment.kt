@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CategoryFragment : Fragment(), CategoryAdapter.CategoryIsClickedListener {
 
-    private lateinit var categoryManager: CategoryManager
+    lateinit var categoryManager: CategoryManager
     private lateinit var categoryRecyclerView: RecyclerView
 
     interface OnCategoryInteractionListener {
