@@ -44,7 +44,7 @@ class CategoryItemsFragment : Fragment() {
 
     }
 
-    fun addItemToCategory(item: String) {
+    fun addItemToCategory(item: CategoryItemModel) {
         category.items.add(item)
         val itemsAdapter: ItemsAdapter = itemsRecyclerView.adapter as ItemsAdapter
         itemsAdapter.setCategory(category)

@@ -26,7 +26,9 @@ class CategoryManager(private val context: Context) {
         val categories = ArrayList<CategoryModel>()
 
         for (item in data) {
-            val category = CategoryModel(item.key, ArrayList(item.value as HashSet<String>))
+
+            val i = item.value as ArrayList<CategoryItemModel>
+            val category = CategoryModel(item.key, i)
 
                 categories.add(category)
             }

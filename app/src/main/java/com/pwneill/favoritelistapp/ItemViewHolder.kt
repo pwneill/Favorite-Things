@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 data class ItemViewHolder(val view: View) : RecyclerView.ViewHolder(view)  {
 
-    val txtView: TextView = itemView.findViewById(R.id.itemTextView)
+    val titleView: TextView = itemView.findViewById(R.id.itemTitleView)
+    val descView: TextView = itemView.findViewById(R.id.itemDescView)
 
 
 }

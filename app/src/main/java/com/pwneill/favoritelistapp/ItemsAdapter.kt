@@ -19,8 +19,9 @@ class ItemsAdapter (private var category: CategoryModel) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
-        holder.txtView.append(category.items[position])
-        Log.i("cat", category.items[position])
+        holder.titleView.text = category.items[position].itemTitle
+        holder.descView.text = category.items[position].itemDesc
+        Log.i("cat", category.items[position].toString())
 
 
     }

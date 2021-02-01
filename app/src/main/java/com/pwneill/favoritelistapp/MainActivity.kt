@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType.TYPE_CLASS_TEXT
-import android.util.Log
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -63,8 +63,6 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryInteraction
 
     private fun displayCategoryItems(cat: CategoryModel) {
 
-        Log.i("tablet", isTablet.toString())
-
         if (!isTablet) {
 
             val categoryItemsIntent = Intent(this, CategoryItemsActivity::class.java)
@@ -99,15 +97,27 @@ class MainActivity : AppCompatActivity(), CategoryFragment.OnCategoryInteraction
 
     private fun displayCreateCategoryItemDialog() {
 
-        val editItemText = EditText(this@MainActivity)
-        editItemText.inputType = TYPE_CLASS_TEXT
+
+        val layout = LinearLayout(this@MainActivity)
+        val itemTitleEditText = EditText(this@MainActivity)
+        itemTitleEditText.inputType = TYPE_CLASS_TEXT
+
+        val itemDescEditText = EditText(this@MainActivity)
+        itemDescEditText.inputType = TYPE_CLASS_TEXT
+
+        layout.addView(itemTitleEditText)
+        layout.addView(itemDescEditText)
 
         val alertDialogBuilder = Builder(this@MainActivity)
-        alertDialogBuilder.setTitle("Enter Item Name Here")
-            .setView(editItemText)
-            .setPositiveButton("Create"){ dialogInterface , _ ->
+            .setTitle(getString(R.string.itemDialogTitle))
+            .setView(layout)
+            .setPositiveButton(getString(R.string.positiveBtnItem)) { dialogInterface, _ ->
 
-                val item: String = editItemText.text.toString()
+                val itemName: String = itemTitleEditText.text.toString()
+                val itemDesc: String = itemDescEditText.text.toString()
+
+                val item = CategoryItemModel(itemName, itemDesc)
+
                 categoryItemsFragment?.addItemToCategory(item)
                 dialogInterface.dismiss()
 

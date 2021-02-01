@@ -33,7 +33,8 @@ class CategoryAdapter(cat: ArrayList<CategoryModel>, private val categoryIsClick
         val newPos: Int  = position
 
         holder.txtCategoryNumber.text = newPos.toString()
-        holder.txtCategoryName.text = categories.get(newPos).name
+        holder.txtCategoryName.text = categories[newPos].name
+
         holder.itemView.setOnClickListener {
             categoryIsClickedInterface.categoryIsClicked(categories[newPos])
         }

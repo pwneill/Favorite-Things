@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginBottom="6dp"
     app:cardCornerRadius="2dp"
     app:cardElevation="10dp">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<LinearLayout
+    android:background="@color/primaryColor"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:background="#FFC107">
+    android:layout_margin="0dp"
+    android:orientation="horizontal"
+    >
+        <TextView
+            android:id="@+id/category_number_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_weight="1"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="19sp" />
+        <TextView
+            android:id="@+id/category_name_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_weight="1"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="19sp" />
 
-    <TextView
-        android:id="@+id/category_number_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_weight="1"
-        android:textColor="#FFFFFF"
-        android:textSize="19sp" />
-
-    <TextView
-        android:id="@+id/category_name_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_weight="1"
-        android:textColor="#FFFFFF"
-        android:textSize="19sp" />
 </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
